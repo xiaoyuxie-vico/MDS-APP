@@ -57,6 +57,7 @@ def main():
     with col2:
         st.image('src/2.jpg', width=250)
 
+    st.markdown('## Raw data')
     st.dataframe(df)
 
     lines = ['a', 'b', 'c']
@@ -165,18 +166,30 @@ def main():
     ax1.plot(range(1, 7), s, '-o', color='k')
     ax1.xaxis.set_major_locator(x_major_locator)  # set x-axis tick interval
     ax1.set_xlabel('Principal Component Number', fontsize=16)
-    ax1.set_ylabel('Eigenvalues', fontsize=16)
+    ax1.set_ylabel('Singular Values', fontsize=16)
 
     # plot the cumulative sum ratio of eigenvalues
     s_squared = s**2
+    energy = np.cumsum(s_squared) / np.sum(s_squared)
     ax2 = fig.add_subplot(1, 2, 2)
-    ax2.plot(range(1, 7), np.cumsum(s_squared) /
-             np.sum(s_squared), '-o', color='k')
+    ax2.plot(range(1, 7), energy, '-o', color='k')
     ax2.xaxis.set_major_locator(x_major_locator)  # set x-axis tick interval
     ax2.set_xlabel('Principal Component Number', fontsize=16)
     ax2.set_ylabel('Cumulative Energy', fontsize=16)
     plt.tight_layout()
     st.pyplot(fig, clear_figure=True)
+
+
+    threshold = st.slider('Select a threshold for energy:', 0.8, 1.0, 0.9)
+    real_dimension = 0
+    for idx, e_i in enumerate(energy.tolist()):
+        if e_i > threshold:
+            real_dimension = idx+1
+            break
+
+    st.markdown(f'''
+        **This is a {real_dimension} dimensional problem.**
+    ''')
 
     # fig = plt.figure(figsize=(12, 8))
     # for i in range(1, 7):
