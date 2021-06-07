@@ -66,34 +66,34 @@ def main():
     st.markdown('## Raw data')
     st.dataframe(df)
 
-    lines = ['a', 'b', 'c']
+    lines = ['1', '2', '3']
     chosen_line = st.selectbox('Select a camera to show raw data', lines, 0)
     global ratio
     ratio = st.slider('Select a ratio to show raw data', 0.01, 1.0, 1.0)
 
-    # col1, col2, col3 = st.beta_columns(3)
-    # show_length = int(df.shape[0] * ratio)-1
-    # with col1:
-    #     fig = plt.figure()
-    #     plt.plot(df['t'][:show_length], df[f'x{chosen_line}'][:show_length])
-    #     plt.xlabel('t', fontsize=14)
-    #     plt.ylabel(f'x{chosen_line}', fontsize=14)
-    #     plt.title(f'x{chosen_line}', fontsize=16)
-    #     st.pyplot(fig, clear_figure=True)
-    # with col2:
-    #     fig = plt.figure()
-    #     plt.plot(df['t'][:show_length], df[f'y{chosen_line}'][:show_length])
-    #     plt.xlabel('t', fontsize=14)
-    #     plt.ylabel(f'y{chosen_line}', fontsize=14)
-    #     plt.title(f'y{chosen_line}', fontsize=16)
-    #     st.pyplot(fig, clear_figure=True)
-    # with col3:
-    #     fig = plt.figure()
-    #     plt.plot(df[f'x{chosen_line}'][:show_length], df[f'y{chosen_line}'][:show_length])
-    #     plt.xlabel(f'x{chosen_line}', fontsize=14)
-    #     plt.ylabel(f'y{chosen_line}', fontsize=14)
-    #     plt.title('x-y', fontsize=16)
-    #     st.pyplot(fig, clear_figure=True)
+    col1, col2, col3 = st.beta_columns(3)
+    show_length = int(df.shape[0] * ratio)-1
+    with col1:
+        fig = plt.figure()
+        plt.plot(df['t'][:show_length], df[f'x{chosen_line}'][:show_length])
+        plt.xlabel('t', fontsize=14)
+        plt.ylabel(f'x{chosen_line}', fontsize=14)
+        plt.title(f'x{chosen_line}', fontsize=16)
+        st.pyplot(fig, clear_figure=True)
+    with col2:
+        fig = plt.figure()
+        plt.plot(df['t'][:show_length], df[f'y{chosen_line}'][:show_length])
+        plt.xlabel('t', fontsize=14)
+        plt.ylabel(f'y{chosen_line}', fontsize=14)
+        plt.title(f'y{chosen_line}', fontsize=16)
+        st.pyplot(fig, clear_figure=True)
+    with col3:
+        fig = plt.figure()
+        plt.scatter(df[f'x{chosen_line}'][:show_length], df[f'y{chosen_line}'][:show_length])
+        plt.xlabel(f'x{chosen_line}', fontsize=14)
+        plt.ylabel(f'y{chosen_line}', fontsize=14)
+        plt.title('x-y', fontsize=16)
+        st.pyplot(fig, clear_figure=True)
 
     st.markdown('Some statistics:')
     st.dataframe(df.describe())
@@ -108,45 +108,15 @@ def main():
         df['{}_new'.format(col_name)] = df[col_name] - \
             df_info[col_name]['mean']
 
-    st.markdown('## Substract Mean Value')
-    df_part = df[['t', 'xa_new', 'ya_new',
-                  'xb_new', 'yb_new', 'xc_new', 'yc_new']]
-    st.dataframe(df_part)
-
-    lines2 = ['a', 'b', 'c']
-    chosen_line2 = st.selectbox(
-        'Select a camera to show parsed data', lines2, 0)
-    global ratio2
-    ratio2 = st.slider('Select a ratio to show parsed data', 0.01, 1.0, 1.0)
-
-    col1, col2 = st.beta_columns(2)
-    show_length = int(df_part.shape[0] * ratio2)-1
-    with col1:
-        fig = plt.figure()
-        plt.plot(df_part['t'][:show_length],
-                 df_part[f'x{chosen_line2}_new'][:show_length])
-        plt.xlabel('t', fontsize=14)
-        plt.ylabel(f'x{chosen_line2}_new', fontsize=14)
-        plt.title(f'x{chosen_line2}_new', fontsize=16)
-        st.pyplot(fig, clear_figure=True)
-    with col2:
-        fig = plt.figure()
-        plt.plot(df_part['t'][:show_length],
-                 df_part[f'y{chosen_line2}_new'][:show_length])
-        plt.xlabel('t', fontsize=14)
-        plt.ylabel(f'y{chosen_line2}_new', fontsize=14)
-        plt.title(f'y{chosen_line2}_new', fontsize=16)
-        st.pyplot(fig, clear_figure=True)
-
-    st.markdown('Some statistics:')
-    st.dataframe(df_part.describe())
+    df_part = df[['t', 'x1_new', 'y1_new',
+                  'x2_new', 'y2_new', 'x3_new', 'y3_new']]
 
     # original data: m*N (m: data point number, N: dimension for each data)
-    X = df[['xa', 'ya', 'xb', 'yb', 'xc', 'yc']].to_numpy()
+    X = df[['x1', 'y1', 'x2', 'y2', 'x3', 'y3']].to_numpy()
 
     # transpose X as B
-    B = df[['xa_new', 'ya_new', 'xb_new',
-            'yb_new', 'xc_new', 'yc_new']].to_numpy().T
+    B = df[['x1_new', 'y1_new', 'x2_new',
+            'y2_new', 'x3_new', 'y3_new']].to_numpy().T
 
     # SVD
     U, s, VT = svd(B, full_matrices=0)
@@ -161,13 +131,14 @@ def main():
     # X = df[['xa', 'ya', 'xb', 'yb', 'xc', 'yc']].to_numpy()
 
     # # transpose X as B
-    # B = df[['xa_new', 'ya_new', 'xb_new', 'yb_new', 'xc_new', 'yc_new']].to_numpy().T
+    # B = df[['x1_new', 'y1_new', 'x2_new', 'y2_new', 'x3_new', 'y3_new']].to_numpy().T
 
     # # SVD
     # U, s, VT = svd(B, full_matrices=0)
     # ```
     # ''')
-    st.markdown(f'Singular Values: {s}')
+    eigenvalues = s**2/df.shape[0]
+    st.markdown(f'Eigenvalues: {eigenvalues}')
 
     x_major_locator = MultipleLocator(1)  # used to set x-axis tick interval
 
@@ -176,10 +147,10 @@ def main():
     # plot the log of eigenvalues
     ax1 = fig.add_subplot(1, 2, 1)
     # ax1.semilogy(range(1, 7), s, '-o', color='k')
-    ax1.plot(range(1, 7), s, '-o', color='k')
+    ax1.plot(range(1, 7), eigenvalues, '-o', color='k')
     ax1.xaxis.set_major_locator(x_major_locator)  # set x-axis tick interval
     ax1.set_xlabel('Principal Component Number', fontsize=16)
-    ax1.set_ylabel('Singular Values', fontsize=16)
+    ax1.set_ylabel('Eigenvalues', fontsize=16)
 
     # plot the cumulative sum ratio of eigenvalues
     s_squared = s**2
@@ -219,14 +190,15 @@ def main():
     C_B = np.cov(B)
     np.set_printoptions(suppress=True)
 
-    st.markdown('`C_Y = np.cov(Y)`')
     st.write(C_Y)
 
-    st.markdown('`C_B = np.cov(B)`')
-    st.write(C_B)
-
-    # st.markdown('Based on the diagonals of the covariance matrix $C_Y$, we can see that the first singular value is far more than other values, which means the first raw has large variance than other rows. Thus, the measure system is intrinsically one-dimensional.')
-
+    st.markdown('''A spring-mass system will oscillate in a pattern that matches a sine wave. 
+    If the system has some damping, the sine wave can be multiplied by an exponential function
+    $z(t)=A*sin⁡(2πft)*exp⁡(-bt)$
+    where A is the starting amplitude, f is the natural frequency in Hz, and b is the damping coefficient. 
+    The natural frequency is the inverse of the peak-to-peak distance of the sine wave. 
+    The damping coefficient is computed by considering the rate of the exponential decay of the sine wave.
+    ''')
 
 if __name__ == '__main__':
     main()
