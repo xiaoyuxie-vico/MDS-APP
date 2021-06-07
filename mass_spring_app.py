@@ -17,7 +17,7 @@ from scipy.linalg import svd
 import streamlit as st
 
 
-np.set_printoptions(precision=5)
+np.set_printoptions(precision=2)
 
 matplotlib.use('agg')
 
