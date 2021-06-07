@@ -32,13 +32,20 @@ def main():
     )
     st.title('Dimension reduction for mass-spring harmonic oscillator')
 
-    st.markdown(f'''
+    st.markdown('''
     ## Objectives
 
     1. Illustrate the motion of the mass with time captured by camera.
     2. Reduce the dimension of the camera data and identify the intrinsic dimension by principal component analysis (PCA).
     3. Identify governing physical parameters for the spring mass system (natural frequency, mass, spring constant, damping, etc.
     ''')
+
+    # Experimental set
+    st.markdown('## Experimental set')
+    st.image('src/schematic.png')
+
+    # Dataset
+    st.markdown('## Dataset')
 
     flag = ['New dataset', 'Default dataset']
     use_new_data = st.selectbox('Chosse a new dataset or use default dataset', flag, 1)
@@ -57,14 +64,6 @@ def main():
         file_path = 'src/multidata2.csv'
         df = pd.read_csv(file_path)
 
-    # Experimental set
-    st.markdown('## Experimental set')
-    col1, col2 = st.beta_columns([1, 1])
-    with col1:
-        st.image('src/1.jpg', width=300)
-    with col2:
-        st.image('src/2.jpg', width=250)
-
     st.markdown('## Raw data')
     st.dataframe(df)
 
@@ -73,7 +72,7 @@ def main():
     global ratio
     ratio = st.slider('Select a ratio to show raw data', 0.01, 1.0, 1.0)
 
-    col1, col2 = st.beta_columns(2)
+    col1, col2, col3 = st.beta_columns(3)
     show_length = int(df.shape[0] * ratio)-1
     with col1:
         fig = plt.figure()
@@ -87,6 +86,13 @@ def main():
         plt.plot(df['t'][:show_length], df[f'y{chosen_line}'][:show_length])
         plt.xlabel('t', fontsize=14)
         plt.ylabel(f'y{chosen_line}', fontsize=14)
+        plt.title(f'y{chosen_line}', fontsize=16)
+        st.pyplot(fig, clear_figure=True)
+    with col3:
+        fig = plt.figure()
+        plt.plot(df[f'x{chosen_line}'][:show_length], df[f'y{chosen_line}'][:show_length])
+        plt.xlabel('t', fontsize=14)
+        plt.ylabel(f'x{chosen_line}', fontsize=14)
         plt.title(f'y{chosen_line}', fontsize=16)
         st.pyplot(fig, clear_figure=True)
 
