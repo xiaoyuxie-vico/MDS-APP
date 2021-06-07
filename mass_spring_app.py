@@ -32,6 +32,14 @@ def main():
     )
     st.title('Dimension reduction for mass-spring harmonic oscillator')
 
+    st.markdown(f'''
+    ## Objectives
+
+    1. Illustrate the motion of the mass with time captured by camera.
+    2. Reduce the dimension of the camera data and identify the intrinsic dimension by principal component analysis (PCA).
+    3. Identify governing physical parameters for the spring mass system (natural frequency, mass, spring constant, damping, etc.
+    ''')
+
     flag = ['New dataset', 'Default dataset']
     use_new_data = st.selectbox('Chosse a new dataset or use default dataset', flag, 1)
 
