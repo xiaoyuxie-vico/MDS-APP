@@ -144,7 +144,7 @@ def main():
     # ```
     # ''')
     eigenvalues = s**2/(df.shape[0]-1)
-    st.markdown(f'Eigenvalues: {s}')
+    st.markdown(f'Eigenvalues: {eigenvalues}')
 
     x_major_locator = MultipleLocator(1)  # used to set x-axis tick interval
 
