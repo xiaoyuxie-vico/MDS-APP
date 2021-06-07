@@ -72,29 +72,29 @@ def main():
     global ratio
     ratio = st.slider('Select a ratio to show raw data', 0.01, 1.0, 1.0)
 
-    col1, col2, col3 = st.beta_columns(3)
-    show_length = int(df.shape[0] * ratio)-1
-    with col1:
-        fig = plt.figure()
-        plt.plot(df['t'][:show_length], df[f'x{chosen_line}'][:show_length])
-        plt.xlabel('t', fontsize=14)
-        plt.ylabel(f'x{chosen_line}', fontsize=14)
-        plt.title(f'x{chosen_line}', fontsize=16)
-        st.pyplot(fig, clear_figure=True)
-    with col2:
-        fig = plt.figure()
-        plt.plot(df['t'][:show_length], df[f'y{chosen_line}'][:show_length])
-        plt.xlabel('t', fontsize=14)
-        plt.ylabel(f'y{chosen_line}', fontsize=14)
-        plt.title(f'y{chosen_line}', fontsize=16)
-        st.pyplot(fig, clear_figure=True)
-    with col3:
-        fig = plt.figure()
-        plt.plot(df[f'x{chosen_line}'][:show_length], df[f'y{chosen_line}'][:show_length])
-        plt.xlabel('t', fontsize=14)
-        plt.ylabel(f'x{chosen_line}', fontsize=14)
-        plt.title(f'y{chosen_line}', fontsize=16)
-        st.pyplot(fig, clear_figure=True)
+    # col1, col2, col3 = st.beta_columns(3)
+    # show_length = int(df.shape[0] * ratio)-1
+    # with col1:
+    #     fig = plt.figure()
+    #     plt.plot(df['t'][:show_length], df[f'x{chosen_line}'][:show_length])
+    #     plt.xlabel('t', fontsize=14)
+    #     plt.ylabel(f'x{chosen_line}', fontsize=14)
+    #     plt.title(f'x{chosen_line}', fontsize=16)
+    #     st.pyplot(fig, clear_figure=True)
+    # with col2:
+    #     fig = plt.figure()
+    #     plt.plot(df['t'][:show_length], df[f'y{chosen_line}'][:show_length])
+    #     plt.xlabel('t', fontsize=14)
+    #     plt.ylabel(f'y{chosen_line}', fontsize=14)
+    #     plt.title(f'y{chosen_line}', fontsize=16)
+    #     st.pyplot(fig, clear_figure=True)
+    # with col3:
+    #     fig = plt.figure()
+    #     plt.plot(df[f'x{chosen_line}'][:show_length], df[f'y{chosen_line}'][:show_length])
+    #     plt.xlabel(f'x{chosen_line}', fontsize=14)
+    #     plt.ylabel(f'y{chosen_line}', fontsize=14)
+    #     plt.title('x-y', fontsize=16)
+    #     st.pyplot(fig, clear_figure=True)
 
     st.markdown('Some statistics:')
     st.dataframe(df.describe())
