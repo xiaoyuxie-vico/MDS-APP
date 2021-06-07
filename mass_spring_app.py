@@ -124,7 +124,7 @@ def main():
     # Transform B to Y
     Y = U.T.dot(B)
 
-    st.markdown('## SVD')
+    st.markdown('## PCA')
     # st.markdown('''
     # ```
     # # original data: m*N (m: data point number, N: dimension for each data)
@@ -163,6 +163,10 @@ def main():
     plt.tight_layout()
     st.pyplot(fig, clear_figure=True)
 
+    st.markdown('''
+    Cumulative Energy:
+    ''')
+
 
     threshold = st.slider('Select a threshold for energy:', 0.8, 1.0, 0.9)
     real_dimension = 0
@@ -199,6 +203,8 @@ def main():
     The natural frequency is the inverse of the peak-to-peak distance of the sine wave. 
     The damping coefficient is computed by considering the rate of the exponential decay of the sine wave.
     ''')
+
+    st.image('src/pic2.png', caption='Reduced 1D data by PCA with damped sinusoidal plot overlaid.')
 
 if __name__ == '__main__':
     main()
