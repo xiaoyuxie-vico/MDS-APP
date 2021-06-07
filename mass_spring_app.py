@@ -24,7 +24,6 @@ matplotlib.use('agg')
 
 def main():
     apptitle = 'Mass-spring-damping-analysis'
-
     st.set_page_config(
         page_title=apptitle,
         page_icon=':eyeglasses:',
