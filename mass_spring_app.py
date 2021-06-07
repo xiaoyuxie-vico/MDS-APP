@@ -72,6 +72,12 @@ def main():
     ratio = st.slider('Select a ratio to show raw data', 0.01, 1.0, 1.0)
 
     col1, col2, col3 = st.beta_columns(3)
+    with col1:
+        video_file = open(f'src/Camera{chosen_line}.mp4', 'rb')
+        video_bytes = video_file.read()
+        st.video(video_bytes)
+
+    col1, col2, col3 = st.beta_columns(3)
     show_length = int(df.shape[0] * ratio)-1
     with col1:
         fig = plt.figure()
@@ -164,7 +170,8 @@ def main():
     st.pyplot(fig, clear_figure=True)
 
     st.markdown('''
-    Cumulative Energy:
+    Cumulative Energy is defined as:
+
     ''')
 
 
@@ -205,6 +212,6 @@ def main():
     ''')
 
     st.image('src/pic2.png', caption='Reduced 1D data by PCA with damped sinusoidal plot overlaid.')
-
+    st.markdown('Estimated amplitude, natural frequency and damping coefficient: (To be developed).')
 if __name__ == '__main__':
     main()
