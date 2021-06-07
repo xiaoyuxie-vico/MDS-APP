@@ -153,7 +153,7 @@ def main():
     # plot the log of eigenvalues
     ax1 = fig.add_subplot(1, 2, 1)
     # ax1.semilogy(range(1, 7), s, '-o', color='k')
-    ax1.plot(range(1, 7), eigenvalues, '-o', color='k')
+    ax1.plot(range(1, 7), s, '-o', color='k')
     ax1.xaxis.set_major_locator(x_major_locator)  # set x-axis tick interval
     ax1.set_xlabel('Principal Component Number', fontsize=16)
     ax1.set_ylabel('Eigenvalues', fontsize=16)
