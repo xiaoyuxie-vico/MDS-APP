@@ -144,7 +144,7 @@ def main():
     # ```
     # ''')
     eigenvalues = s**2/(df.shape[0]-1)
-    st.markdown(f'Eigenvalues: {eigenvalues}')
+    st.markdown(f'Eigenvalues: {s}')
 
     x_major_locator = MultipleLocator(1)  # used to set x-axis tick interval
 
@@ -159,7 +159,8 @@ def main():
     ax1.set_ylabel('Eigenvalues', fontsize=16)
 
     # plot the cumulative sum ratio of eigenvalues
-    energy = np.cumsum(eigenvalues) / np.sum(eigenvalues)
+    # energy = np.cumsum(eigenvalues) / np.sum(eigenvalues)
+    energy = np.cumsum(s) / np.sum(s)
     # # compare energy with sklearn
     # from sklearn.decomposition import PCA
     # pca = PCA(n_components=6)
