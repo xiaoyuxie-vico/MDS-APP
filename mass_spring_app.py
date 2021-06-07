@@ -17,7 +17,7 @@ from scipy.linalg import svd
 import streamlit as st
 
 
-np.set_printoptions(precision=2)
+np.set_printoptions(precision=5)
 
 matplotlib.use('agg')
 
@@ -143,7 +143,7 @@ def main():
     # U, s, VT = svd(B, full_matrices=0)
     # ```
     # ''')
-    eigenvalues = s**2/df.shape[0]
+    eigenvalues = s**2/(df.shape[0]-1)
     st.markdown(f'Eigenvalues: {eigenvalues}')
 
     x_major_locator = MultipleLocator(1)  # used to set x-axis tick interval
@@ -159,8 +159,13 @@ def main():
     ax1.set_ylabel('Eigenvalues', fontsize=16)
 
     # plot the cumulative sum ratio of eigenvalues
-    s_squared = s**2
-    energy = np.cumsum(s_squared) / np.sum(s_squared)
+    energy = np.cumsum(eigenvalues) / np.sum(eigenvalues)
+    # # compare energy with sklearn
+    # from sklearn.decomposition import PCA
+    # pca = PCA(n_components=6)
+    # pca.fit(df[['x1', 'y1', 'x2', 'y2', 'x3', 'y3']])
+    # print(np.cumsum((pca.explained_variance_ratio_)))
+    # print(np.cumsum(eigenvalues)/np.sum(eigenvalues))
     ax2 = fig.add_subplot(1, 2, 2)
     ax2.plot(range(1, 7), energy, '-o', color='k')
     ax2.xaxis.set_major_locator(x_major_locator)  # set x-axis tick interval
@@ -170,10 +175,12 @@ def main():
     st.pyplot(fig, clear_figure=True)
 
     st.markdown('''
-    Cumulative Energy is defined as:
+    The i-th Cumulative Energy $e_{i}$ is defined as: 
 
+    $e_{i}=\\frac{\\sum_{k=1}^{i}\\lambda_k}{\\sum_{k=1}^{m}\\lambda_k}$
+
+    , where $m$ is the total number of eigenvalues, $\\lambda$ is an eigenvalue.
     ''')
-
 
     threshold = st.slider('Select a threshold for energy:', 0.8, 1.0, 0.9)
     real_dimension = 0
