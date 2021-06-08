@@ -71,12 +71,12 @@ def main():
     global ratio
     ratio = st.slider('Select a ratio to show raw data', 0.01, 1.0, 1.0)
 
-    col1, col2, col3 = st.beta_columns(3)
-    with col1:
-        st.write('The camera video will be shown later.')
-        # video_file = open(f'src/Camera{chosen_line}.mp4', 'rb')
-        # video_bytes = video_file.read()
-        # st.video(video_bytes)
+    st.write('The camera video will be shown later.')
+    # col1, col2, col3 = st.beta_columns(3)
+    # with col1:
+    #     # video_file = open(f'src/Camera{chosen_line}.mp4', 'rb')
+    #     # video_bytes = video_file.read()
+    #     # st.video(video_bytes)
 
     col1, col2, col3 = st.beta_columns(3)
     show_length = int(df.shape[0] * ratio)-1
