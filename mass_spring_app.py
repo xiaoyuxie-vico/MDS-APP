@@ -105,7 +105,7 @@ def main():
     global ratio
     ratio = st.slider('Select a ratio to show raw data', 0.01, 1.0, 1.0)
 
-    col1, col2, col3 = st.beta_columns(3)
+    col1, col2, col3 = st.columns(3)
     show_length = int(df.shape[0] * ratio)-1
     with col1:
         fig = plt.figure()
